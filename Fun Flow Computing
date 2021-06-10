@@ -1,0 +1,96 @@
+
+#Flow Fun Computing
+import tkinter as tk
+from tkinter import ttk
+
+LARGEFONT =("Verdana", 17)
+
+class tkinterApp(tk.Tk):
+    def __init__(self, *args, **kwargs):
+
+        tk.Tk.__init__(self, *args, **kwargs)
+
+        container = tk.Frame(self) 
+        container.pack(side = "top", fill = "both", expand = True)
+  
+        container.grid_rowconfigure(0, weight = 1)
+        container.grid_columnconfigure(0, weight = 1)
+
+
+        self.frames = {} 
+
+        for F in (page1, Page2, Page3):
+  
+            frame = F(container, self)
+
+            self.frames[F] = frame
+
+            frame.config(background='turquoise')
+    
+
+            frame.grid(row = 0, column = 0, sticky ="nsew")
+  
+        self.show_frame(page1)
+
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
+
+class page1(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        
+        label = ttk.Label(self, font = LARGEFONT,text="Fun Flow Computing",background='turquoise')
+        label.grid(row = 0, column = 1, padx = 10, pady = 10)
+
+        button1 = ttk.Button(self, text ="Start",
+        command = lambda : controller.show_frame(Page2))
+
+        button2 = ttk.Button(self, text ="Menu",
+        command = lambda : controller.show_frame(Page3))
+
+        button3 = ttk.Button(self, text ="Quit",
+        command = quit)
+
+        button1.grid(row = 1, column = 0)
+        button2.grid(row = 1, column = 1,pady = 30)
+        button3.grid(row = 1, column = 2)
+        
+
+class Page2(tk.Frame):
+    def __init__(self, parent, controller):
+         
+        tk.Frame.__init__(self, parent)
+        label = ttk.Label(self, font = LARGEFONT, text ="Menus",background='turquoise')
+        label.grid(row = 0, column = 1, padx = 10, pady = 10)
+
+        button1 = ttk.Button(self, text ="Start",
+        command = lambda : controller.show_frame(Page3))
+        
+        button2 = ttk.Button(self, text ="back",
+        command = lambda : controller.show_frame(page1))
+        
+        button1.grid(row = 1, column = 0)
+        button2.grid(row = 1, column = 1, padx = 10, pady = 10)
+
+class Page3(tk.Frame):
+    def __init__(self, parent, controller):
+        
+        tk.Frame.__init__(self, parent)
+        label = ttk.Label(self, font = LARGEFONT, text ="game page",background='turquoise')
+        label.grid(row = 0, column = 1, padx = 10, pady = 10)
+
+        button1 = ttk.Button(self, text ="Back",
+        command = lambda : controller.show_frame(Page2))
+
+        button2 = ttk.Button(self, text ="Startpage",
+        command = lambda : controller.show_frame(page1))
+
+        button1.grid(row = 1, column = 1)
+        button2.grid(row = 1, column = 3, pady = 30)
+  
+
+
+
+app = tkinterApp()
+app.mainloop()
